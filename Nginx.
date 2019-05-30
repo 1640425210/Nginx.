@@ -27,12 +27,7 @@ sudo mv composer.phar /usr/local/bin/composer 看情况移动或改名
 	ssl_certificate 文件路径;
 	ssl_certificate_key key文件路径;
 6.添加 //从域名直接跳转到https
-server{
-	listen 80 default_server;
-	listen [::] 80 default_server;
-	server_name lingering.xyz www.lingering.xyz;
-	return 301 https://$server_name$request_uri;
-}
+return 301 https://$server_name$request_uri;
 
 
 
