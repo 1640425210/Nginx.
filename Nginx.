@@ -129,6 +129,24 @@ cat /dev/urandom | LC_ALL=C tr -dc "[:alnum:]" | fold -w 16 |head -16
 查看端口开启: netstat -tulpen
 如只开启了127.0.0.1:3306 需修改/etc/mysql/mysql.conf.d/mysqld.cnf bind-address  = 0.0.0.0
 
+数据库忘记密码:
+方法一:
+vim /etc/mysql/debian.cnf
+mysql -u debian-sys-maint -p
+use mysql;
+update user set authentication_string=password('new password') where User='root';
+quit;
+方法二:
+sudo /etc/init.d/mysql stop
+sudo mkdir -p /var/run/mysqld
+sudo chown mysql:mysql /var/run/mysqld
+sudo /usr/bin/mysqld_safe --skip-grant-tables --skip-networking & mysql -u root
+use mysql;
+update user set authentication_string=PASSWORD("You'r New Password") where User='root';
+update user set plugin="mysql_native_password";
+flush privileges;
+quit;
+
 
 
 五.server配置
@@ -266,10 +284,11 @@ swapoff /var/swap 清理分区
 git配置: vim ~/.oh-my-zsh/plugins/git/git.plugin.zsh
 laravel生成.env key: php artisan key:generate
 laravel生成数据库表: php artisan migrate
-git清楚缓存 git rm -r --cached .
-查找php安装目录 php -i | grep "Loaded Configuration File"
-mysql安装目录  /usr/bin/mysql --help | grep -A1 'Default options'
-nginx安装目录 ps -ef | grep 'nginx'
-php-fpm安装目录 ps -ef | grep 'php-fpm'
-php版本切换 update-alternatives --config php
+git清楚缓存: git rm -r --cached .
+查找php安装目录: php -i | grep "Loaded Configuration File"
+mysql安装目录: /usr/bin/mysql --help | grep -A1 'Default options'
+nginx安装目录: ps -ef | grep 'nginx'
+php-fpm安装目录: ps -ef | grep 'php-fpm'
+php版本切换: update-alternatives --config php
+正则匹配手机号: /1(3[\d]|4[57]|5[0-35-9]|7[01678]|8[\d])[\d]{8}/
 
