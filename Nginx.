@@ -292,3 +292,11 @@ php版本切换: update-alternatives --config php
 Mac切换php版本: brew services stop php@7.1   brew services start php@7.3    brew unlink php@7.1     brew link php@7.3  需要重新的打开新的窗口
 Mac php-fpm自动重启解除: launchctl unload ~/Library/LaunchAgents/homebrew.mxcl.php.plist
 恢复: launchctl load ~/Library/LaunchAgents/homebrew.mxcl.php.plist
+
+开启数据库查询语句日志： SET GLOBAL log_output = 'TABLE';SET GLOBAL general_log = 'ON'; (开启后记得测试完成后快速关闭)
+SET GLOBAL log_output = 'TABLE'; SET GLOBAL general_log = 'OFF';  //日志关闭
+/home/usrdata/mysql-generic-5.5/mysql/general_log.CSV;   //日志位置
+3.show global status like 'open%tables';   //设置table_open_cache
+show global status like '%key_read%';	//设置key_buffer_size
+show status like 'handler_read_%';   //查看索引使用情况
+show global status like 'Thread%';   //查看线程使用情况 设置thread_cache_size
